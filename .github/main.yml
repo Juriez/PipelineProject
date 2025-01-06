@@ -1,33 +1,62 @@
-name: DevOps Pipeline
+# name: DevOps Pipeline
+
+# on:
+#   push:
+#     branches:
+#       - main
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#     - name: Checkout code
+#       uses: actions/checkout@v3
+
+#     - name: Set up Node.js
+#       uses: actions/setup-node@v3
+#       with:
+#         node-version: 16
+
+#     - name: Install dependencies
+#       run: npm install
+
+#     - name: Run tests
+#       run: npm test
+
+#     - name: Deploy to Heroku
+#       env:
+#         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+#       run: |
+#         npm install -g heroku
+#         heroku git:remote -a your-app-name
+#         git push heroku main
+
+name: Vercel Production Deployment
+
+env: 
+    VERCEL_ORG_ID: ${{secrets.VERCEL_ORG_ID}}
+    VERCEL_PROJECT_ID: ${{secrets.VERCEL_PROJECT_ID}}
 
 on:
-  push:
-    branches:
-      - main
+    push:
+         branches:
+              -main
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+    Deploy-Production:
+        runs-on: ubuntu-latest
+        steps:
 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+            -uses: actions/checkout@v3
+            -name: Install Vercel CLI
+             run: npm install --global vercel
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: 16
+            -name: Pull Vercel Environment Information
+             run: vercel pull --yes --environment=production --tocken= ${{secrets.VERCEL_TOKEN}}
 
-    - name: Install dependencies
-      run: npm install
+             -name: Build Project Artifacts
+              run: vercel build --prod --token= ${{secrets.VERCEL_TOKEN}}
 
-    - name: Run tests
-      run: npm test
-
-    - name: Deploy to Heroku
-      env:
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      run: |
-        npm install -g heroku
-        heroku git:remote -a your-app-name
-        git push heroku main
+             -name: Deploy Project Artifacts
+              run: vercel deploy --prebuilt --prod --token= ${{secrets.VERCEL_TOKEN}}
