@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
 
 // Export the server for testing
 
-module.exports = { app };
+export default app;
 
 if(import.meta.url === `file://${process.argv[1]}`){
    app.listen(port, () => {
