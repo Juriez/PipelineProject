@@ -85,10 +85,10 @@ jobs:
         run: npm install
 
       - name: Pull Vercel Environment Information
-        run: vercel pull --yes --environment=preview --token=${{ secrets.FirstToken }}
+        run: vercel pull --yes --environment=preview --token=${{ secrets.SecondToken }}
 
       - name: Build Project Artifacts
-        run: vercel build --token=${{ secrets.FirstToken }}
+        run: vercel build --token=${{ secrets.SecondToken }}
 
       - name: Deploy Project Artifacts
-        run: vercel deploy --prebuilt --token=${{ secrets.FirstToken }}
+        run: vercel deploy --prebuilt --token=${{ secrets.SecondToken }}
