@@ -11,12 +11,12 @@
 
 
 const request = require("supertest");
-const { app, server } = require("../index");
+const { app } = require("../index");
 
 describe("GET /", () => {
   afterAll(() => {
     // Close the server after tests
-    server.close();
+    app.close();
   });
 
   it("should return 'Hello, World!'", async () => {

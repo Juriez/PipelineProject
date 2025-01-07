@@ -22,8 +22,11 @@ app.get("/", (req, res) => {
 });
 
 // Export the server for testing
-const server = app.listen(port, () => {
-  console.log(`App is running on http://localhost:${port}`);
-});
 
-module.exports = { app, server };
+module.exports = { app };
+
+if(import.meta.url === `file://${process.argv[1]}`){
+   app.listen(port, () => {
+    console.log(`App is running on http://localhost:${port}`);
+  });
+}
